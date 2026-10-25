@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+h1 {
+  font-size: 3rem;      /* whatever you had before */
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.subheading {
+  margin-top: 0.25rem; /* tight to the heading */
+  margin-bottom: 1.5rem;
+}
