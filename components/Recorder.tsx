@@ -11,7 +11,7 @@ type Props = {
 
 export default function Recorder({
   label,
-  doneLabel = "Good? Click next.",
+  doneLabel = "Sounds good? Click next.",
   boxClassName = "bg-yellow-100",
   onRecorded,
 }: Props) {
