@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Recorder from "./Recorder";
-import { scoreAttempt } from "../lib/score";
+import { preloadModel, scoreWithModel } from "../lib/embed";
 
 type GameInfo = { nickname: string; nativeName: string };
 type Step = "nickname" | "play" | "result";
@@ -26,6 +26,7 @@ export default function FriendGame({ id }: { id: string }) {
   const [rankingError, setRankingError] = useState(false);
 
   useEffect(() => {
+    preloadModel();
     let objectUrl: string | null = null;
 
     async function load() {
@@ -84,7 +85,7 @@ export default function FriendGame({ id }: { id: string }) {
     setScoring(true);
     setScoreError(null);
     try {
-      const r = await scoreAttempt(originalBlob, attempt);
+      const r = await scoreWithModel(originalBlob, attempt);
       setResult(r);
       setShareUrl(`${window.location.origin}/g/${id}`);
       setCopied(false);
@@ -197,7 +198,12 @@ export default function FriendGame({ id }: { id: string }) {
             </button>
           </div>
 
-          {scoreError && <p className="text-red-700">{scoreError}</p>}
+          {scoring && (
+            <div className="flex items-center gap-3 text-sm">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-neutral-900 border-t-transparent" />
+              <span>Listening closely... this can take a moment the first time.</span>
+            </div>
+          )}
         </>
       )}
 
@@ -229,9 +235,8 @@ export default function FriendGame({ id }: { id: string }) {
                   return (
                     <li
                       key={row.nickname}
-                      className={`flex justify-between rounded-lg px-3 py-2 ${
-                        isYou ? "bg-yellow-300 font-semibold" : ""
-                      }`}
+                      className={`flex justify-between rounded-lg px-3 py-2 ${isYou ? "bg-yellow-300 font-semibold" : ""
+                        }`}
                     >
                       <span>
                         {i + 1}. {row.nickname}
