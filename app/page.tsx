@@ -10,6 +10,27 @@ export default function Home() {
   const [nickname, setNickname] = useState("");
   const [nativeName, setNativeName] = useState("");
   const [recording, setRecording] = useState<Blob | null>(null);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  async function createGame() {
+    if (!recording) return;
+    setStep("share");
+    setShareUrl(null);
+    setSaveError(null);
+    try {
+      const form = new FormData();
+      form.append("nickname", nickname);
+      form.append("nativeName", nativeName);
+      form.append("audio", new File([recording], "original", { type: recording.type }));
+      const res = await fetch("/api/games", { method: "POST", body: form });
+      if (!res.ok) throw new Error();
+      const { id } = await res.json();
+      setShareUrl(`${window.location.origin}/g/${id}`);
+    } catch {
+      setSaveError("Couldn't save your recording. Please try again.");
+    }
+  }
 
   return (
     <main className="min-h-screen bg-yellow-200 text-neutral-900 flex flex-col items-center justify-center gap-6 p-8">
@@ -64,7 +85,7 @@ export default function Home() {
               onRecorded={setRecording}
             />
             <button
-              onClick={() => setStep("share")}
+              onClick={createGame}
               disabled={!recording}
               aria-label="Next"
               className="absolute left-full top-1/2 ml-4 -translate-y-1/2 flex h-[55px] w-[55px] items-center justify-center rounded-xl bg-neutral-900 text-yellow-200 disabled:opacity-40"
@@ -89,12 +110,20 @@ export default function Home() {
       {step === "share" && (
         <div className="flex flex-col items-center gap-4 w-full max-w-sm text-center">
           <p>
-            Perfect! 
+            Perfect!
             <br />
             Share it to your friends and see who says it best!
           </p>
-          <div className="rounded-xl bg-yellow-100 px-4 py-3 w-full">
-            Link coming in the next step
+          <div className="rounded-xl bg-yellow-100 px-4 py-3 w-full break-all">
+            {saveError ? (
+              <span className="text-red-700">{saveError}</span>
+            ) : shareUrl ? (
+              <a href={shareUrl} className="underline">
+                {shareUrl}
+              </a>
+            ) : (
+              "Saving…"
+            )}
           </div>
           <button onClick={() => setStep("record")} className="underline">
             Back

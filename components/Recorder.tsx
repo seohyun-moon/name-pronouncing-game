@@ -5,12 +5,14 @@ import { useRef, useState } from "react";
 type Props = {
   label: string;
   doneLabel?: string;
+  boxClassName?: string;
   onRecorded: (blob: Blob) => void;
 };
 
 export default function Recorder({
   label,
-  doneLabel = "Sounds good? Click next.",
+  doneLabel = "Good? Click next.",
+  boxClassName = "bg-yellow-100",
   onRecorded,
 }: Props) {
   const [isRecording, setIsRecording] = useState(false);
@@ -53,10 +55,14 @@ export default function Recorder({
   }
 
   return (
-    <div className="flex flex-col items-center gap-3 rounded-2xl bg-yellow-100 p-6 w-full max-w-sm text-center">
+    <div
+      className={`flex flex-col items-center gap-3 rounded-2xl ${boxClassName} p-6 w-full max-w-sm text-center`}
+    >
       <h2 className="text-xl font-semibold whitespace-pre-line">
         {hasRecorded ? doneLabel : label}
       </h2>
+
+      {audioUrl && <audio controls src={audioUrl} />}
 
       {isRecording ? (
         <button
@@ -74,7 +80,6 @@ export default function Recorder({
         </button>
       )}
 
-      {audioUrl && <audio controls src={audioUrl} />}
       {error && <p className="text-red-700 text-sm">{error}</p>}
     </div>
   );
