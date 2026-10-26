@@ -19,7 +19,7 @@ export default function Home() {
         </h1>
         <p className="mt-2 text-lg text-[#5c5a3d]">
           {step === "name"
-            ? "Record your name. Friends try it. See who says it best."
+            ? "Record your name. Share it to friends. See who says it best."
             : `Hi, ${nickname} / ${nativeName}`}
         </p>
       </div>
@@ -60,7 +60,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4 w-full max-w-sm">
           <div className="relative w-full flex flex-col items-center gap-4">
             <Recorder
-              label={"Say your name\nthe way it's supposed to sound"}
+              label={"Say your name\nthe way it's supposed to sound."}
               onRecorded={setRecording}
             />
             <button
@@ -89,8 +89,9 @@ export default function Home() {
       {step === "share" && (
         <div className="flex flex-col items-center gap-4 w-full max-w-sm text-center">
           <p>
-            Nice, {nickname}
-            {nativeName && ` (${nativeName})`}! Your shareable link will show up here.
+            Perfect! 
+            <br />
+            Share it to your friends and see who says it best!
           </p>
           <div className="rounded-xl bg-yellow-100 px-4 py-3 w-full">
             Link coming in the next step
