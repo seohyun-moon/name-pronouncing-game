@@ -81,7 +81,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4 w-full max-w-sm">
           <div className="relative w-full flex flex-col items-center gap-4">
             <Recorder
-              label={"Say your name\nthe way it's supposed to sound."}
+              label={"How it's supposed to sound."}
               onRecorded={setRecording}
             />
             <button
