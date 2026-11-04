@@ -5,7 +5,14 @@ import Recorder from "./Recorder";
 import { scoreAttempt } from "../lib/score";
 import { compareWithModel } from "../lib/embed";
 
-type Row = { label: string; mfcc: string; model: string; info: string };
+type Row = {
+  label: string;
+  mfcc: string;
+  model: string;
+  voiced: string;
+  smooth: string;
+  info: string;
+};
 
 export default function LabClient() {
   const [original, setOriginal] = useState<Blob | null>(null);
@@ -41,6 +48,8 @@ export default function LabClient() {
           label: label.trim() || `#${r.length + 1}`,
           mfcc: mfcc.distance.toFixed(3),
           model: model.distance.toFixed(3),
+          voiced: model.voicedDistance.toFixed(3),
+          smooth: model.smoothDistance.toFixed(3),
           info: `${model.key} ${model.dims.join("x")}`,
         },
       ]);
@@ -56,7 +65,7 @@ export default function LabClient() {
     <main className="min-h-screen bg-yellow-200 text-neutral-900 flex flex-col items-center gap-6 p-8">
       <h1 className="text-3xl font-bold">Scoring lab</h1>
       <p className="text-sm text-center max-w-md">
-        Lower distance means closer to the original. Compare how the two methods order your test attempts.
+        Lower distance means closer to the original. Compare how the methods order your test attempts.
       </p>
 
       <div className="flex flex-col gap-2 w-full max-w-sm">
@@ -110,6 +119,8 @@ export default function LabClient() {
               <th className="p-3">Label</th>
               <th className="p-3">MFCC</th>
               <th className="p-3">Model</th>
+              <th className="p-3">Voiced</th>
+              <th className="p-3">Smooth</th>
             </tr>
           </thead>
           <tbody>
@@ -118,6 +129,8 @@ export default function LabClient() {
                 <td className="p-3">{r.label}</td>
                 <td className="p-3">{r.mfcc}</td>
                 <td className="p-3">{r.model}</td>
+                <td className="p-3">{r.voiced}</td>
+                <td className="p-3">{r.smooth}</td>
               </tr>
             ))}
           </tbody>
