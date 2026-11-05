@@ -26,7 +26,9 @@ export default function Recorder({
   async function startRecording() {
     setError(null);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { noiseSuppression: true, echoCancellation: true, autoGainControl: true },
+      });
       const recorder = new MediaRecorder(stream);
       chunksRef.current = [];
 

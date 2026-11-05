@@ -212,9 +212,6 @@ export default function FriendGame({ id }: { id: string }) {
           <div className="flex flex-col items-center gap-1 text-center">
             <p className="text-lg">Your score is...</p>
             <p className="text-7xl font-bold">{result.score}</p>
-            <p className="text-xs opacity-60">
-              (testing only: raw distance {result.distance.toFixed(2)})
-            </p>
           </div>
 
           <div className="flex flex-col gap-2 rounded-2xl bg-yellow-100 p-6 w-full max-w-sm">
