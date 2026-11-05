@@ -128,6 +128,11 @@ export default function Home() {
           <button onClick={() => setStep("record")} className="underline">
             Back
           </button>
+          <p className="max-w-xs text-center text-xs opacity-60">
+            Your link expires in 7 days. 
+            <br />
+            Your recording and your friends&apos; attempts are deleted with it.
+          </p>
         </div>
       )}
     </main>
