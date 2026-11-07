@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Recorder from "./Recorder";
 import { preloadModel, scoreWithModel } from "../lib/embed";
+import ShareButton from "./ShareButton";
 
 type GameInfo = { nickname: string; nativeName: string };
 type Step = "nickname" | "play" | "result";
@@ -250,13 +251,19 @@ export default function FriendGame({ id }: { id: string }) {
             <h2 className="text-xl font-semibold">
               Think your friends can beat {result.score}?
             </h2>
-            <p className="break-all text-sm">{shareUrl}</p>
-            <button
-              onClick={copyLink}
-              className="rounded-full bg-neutral-900 text-yellow-200 px-6 py-3 font-semibold"
+            <a
+              href={shareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="break-all text-sm underline"
             >
-              {copied ? "Copied!" : "Copy link"}
-            </button>
+              {shareUrl}
+            </a>
+            <ShareButton
+              url={shareUrl}
+              label="Share link"
+              text={`Can you say ${game.nickname}'s name right? I got ${result.score}. Try it!`}
+            />
           </div>
 
           <button

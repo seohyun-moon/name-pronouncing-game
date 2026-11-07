@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Recorder from "../components/Recorder";
+import ShareButton from "../components/ShareButton";
 
 type Step = "name" | "record" | "share";
 
@@ -114,22 +115,28 @@ export default function Home() {
             <br />
             Share it to your friends and see who says it best!
           </p>
-          <div className="rounded-xl bg-yellow-100 px-4 py-3 w-full break-all">
-            {saveError ? (
-              <span className="text-red-700">{saveError}</span>
-            ) : shareUrl ? (
-              <a href={shareUrl} className="underline">
-                {shareUrl}
-              </a>
-            ) : (
-              "Saving…"
-            )}
+          <div className="flex w-full items-stretch gap-2">
+            <div className="flex-1 rounded-xl bg-yellow-100 px-4 py-3 break-all">
+              {shareUrl ? (
+                <a
+                  href={shareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  {shareUrl}
+                </a>
+              ) : (
+                (saveError ?? "Saving your recording...")
+              )}
+            </div>
+            {shareUrl && <ShareButton url={shareUrl} />}
           </div>
           <button onClick={() => setStep("record")} className="underline">
             Back
           </button>
           <p className="max-w-xs text-center text-xs opacity-60">
-            Your link expires in 7 days. 
+            Your link expires in 7 days.
             <br />
             Your recording and your friends&apos; attempts are deleted with it.
           </p>
