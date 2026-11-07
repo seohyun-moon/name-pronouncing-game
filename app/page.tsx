@@ -89,7 +89,7 @@ export default function Home() {
               onClick={createGame}
               disabled={!recording}
               aria-label="Next"
-              className="absolute left-full top-1/2 ml-4 -translate-y-1/2 flex h-[55px] w-[55px] items-center justify-center rounded-xl bg-neutral-900 text-yellow-200 disabled:opacity-40"
+              className="flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-neutral-900 text-yellow-200 disabled:opacity-40 sm:absolute sm:left-full sm:top-1/2 sm:ml-4 sm:-translate-y-1/2"
             >
               <svg
                 width="24"
