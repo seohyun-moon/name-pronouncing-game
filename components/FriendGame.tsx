@@ -25,6 +25,7 @@ export default function FriendGame({ id }: { id: string }) {
   const [copied, setCopied] = useState(false);
   const [ranking, setRanking] = useState<RankRow[] | null>(null);
   const [rankingError, setRankingError] = useState(false);
+  const [debug, setDebug] = useState(false);
 
   useEffect(() => {
     preloadModel();
@@ -92,6 +93,7 @@ export default function FriendGame({ id }: { id: string }) {
       setCopied(false);
       setRanking(null);
       setRankingError(false);
+      setDebug(new URLSearchParams(window.location.search).get("debug") === "1");
       setStep("result");
       saveAndLoadRanking(r.score, attempt);
     } catch {
@@ -213,6 +215,12 @@ export default function FriendGame({ id }: { id: string }) {
           <div className="flex flex-col items-center gap-1 text-center">
             <p className="text-lg">Your score is...</p>
             <p className="text-7xl font-bold">{result.score}</p>
+            {debug && (
+              <p className="text-xs opacity-60">
+                debug: distance {result.distance.toFixed(3)} | original {originalBlob?.type} | attempt{" "}
+                {attempt?.type}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-2 rounded-2xl bg-yellow-100 p-6 w-full max-w-sm">
